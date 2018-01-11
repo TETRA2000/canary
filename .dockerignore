@@ -1,0 +1,9 @@
+# IntelliJ
+.idea
+*.iml
+
+.git
+.dockerignore
+.Dockerfile
+
+vendor/
