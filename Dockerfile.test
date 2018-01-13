@@ -1,0 +1,3 @@
+FROM canary-for-testing
+
+RUN go test -v ./...
