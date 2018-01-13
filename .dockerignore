@@ -4,7 +4,7 @@
 
 .git
 .dockerignore
-.Dockerfile
+Dockerfile*
 
 ### Go template
 # Binaries for programs and plugins
@@ -28,3 +28,4 @@ vendor/
 data/
 canary
 *.sh
+*.bat
