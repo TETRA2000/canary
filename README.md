@@ -1,6 +1,6 @@
 # Canary
 
-[![CircleCI](https://circleci.com/gh/TETRA2000/canary.svg?style=svg)](https://circleci.com/gh/TETRA2000/canary)
+[![CircleCI](https://circleci.com/gh/TETRA2000/canary.svg?style=svg&circle-token=fb895ba698b6dd430d9b97a171a3184e9b02537e)](https://circleci.com/gh/TETRA2000/canary)
 
 # Requirements
 
