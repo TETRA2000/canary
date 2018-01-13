@@ -26,6 +26,10 @@ RUN go get -u github.com/golang/dep/cmd/dep
 
 ENV APP_HOME=$GOPATH/src/github.com/tetra2000/canary
 
+# TODO Rethink later
+ENV CANARY_DATA=/opt/canary/data
+VOLUME $CANARY_DATA
+
 ADD . $APP_HOME
 WORKDIR $APP_HOME
 RUN dep ensure

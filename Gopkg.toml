@@ -21,5 +21,9 @@
 
 
 [[constraint]]
+  branch = "v25"
+  name = "gopkg.in/libgit2/git2go.v25"
+
+[[constraint]]
   name = "github.com/docker/docker"
-  version = "1.13.1"
+  version = "0.5.3"
