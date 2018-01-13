@@ -23,3 +23,8 @@
 .glide/
 
 vendor/
+
+# canary
+data/
+canary
+*.sh

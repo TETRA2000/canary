@@ -16,3 +16,7 @@
 .glide/
 
 vendor/
+
+# canary
+data/
+canary
