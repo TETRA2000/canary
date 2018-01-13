@@ -13,6 +13,11 @@ docker build -t canary .
 docker run -d -v $PWD/data:/opt/canary/data -v /var/run/docker.sock:/var/run/docker.sock canary
 ```
 
+## Test
+```bash
+./test.sh
+```
+
 ## Directory structure
 
 ```

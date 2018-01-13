@@ -26,3 +26,5 @@ vendor/
 
 # canary
 data/
+canary
+*.sh

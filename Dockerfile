@@ -17,8 +17,8 @@ RUN apk --update add bash curl \
   && rm -rf /tmp/* \
   && rm -rf /var/cache/apk/*
 
-# git
-RUN apk --update add git \
+# git, build-base
+RUN apk --update add git build-base \
     && rm -rf /var/cache/apk/*
 
 # dep
@@ -33,5 +33,9 @@ VOLUME $CANARY_DATA
 ADD . $APP_HOME
 WORKDIR $APP_HOME
 RUN dep ensure
+
+# TODO fix
+RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
+
 RUN go build
 CMD ./canary
