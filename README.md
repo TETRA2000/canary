@@ -13,6 +13,9 @@ docker build -t canary .
 docker run -d -v $PWD/data:/opt/canary/data -v /var/run/docker.sock:/var/run/docker.sock canary
 ```
 
+If you building for development, adding `--build-arg USE_HOST_VENDOR=1` will keep files in `vendor/` and skip `dep ensure`.
+
+
 ## Test
 ```bash
 ./test.sh
@@ -22,7 +25,8 @@ docker run -d -v $PWD/data:/opt/canary/data -v /var/run/docker.sock:/var/run/doc
 
 ```
 ├── canary
-│   ├── plugins/    -- Default plugins
 │   ├── data/       -- App data
+│   ├── plugins/    -- Default plugins
+│   ├── scripts/    -- Development tools
 │   └── ...
 ```

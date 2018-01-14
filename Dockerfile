@@ -32,10 +32,13 @@ VOLUME $CANARY_DATA
 
 ADD . $APP_HOME
 WORKDIR $APP_HOME
-RUN dep ensure
+
+ARG USE_HOST_VENDOR=0
+RUN USE_HOST_VENDOR=$USE_HOST_VENDOR ./scripts/dep_ensure.sh
 
 # TODO fix
 RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
+RUN go build -buildmode=plugin  -o plugins/docker.so plugins/docker/docker.go
 
 RUN go build
 CMD ./canary

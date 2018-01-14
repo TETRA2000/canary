@@ -22,7 +22,8 @@ Dockerfile*
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
-vendor/
+# Copy vendor dir to speed up development build.
+#vendor/
 
 # canary
 data/
