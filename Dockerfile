@@ -34,7 +34,7 @@ ADD . $APP_HOME
 WORKDIR $APP_HOME
 
 ARG USE_HOST_VENDOR=0
-RUN USE_HOST_VENDOR=$USE_HOST_VENDOR ./scripts/dep_ensure.sh
+RUN ./scripts/dep_ensure.sh
 
 # TODO fix
 RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
