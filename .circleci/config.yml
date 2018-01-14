@@ -23,8 +23,9 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
 
+      - run: go get -u github.com/golang/dep/cmd/dep
+      - run: dep ensure
       # TODO: fix later
       - run: go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
-
-      - run: go get -v -t -d ./...
+      - run: go build -buildmode=plugin  -o plugins/docker.so plugins/docker/docker.go
       - run: go test -v ./...
