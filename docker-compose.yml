@@ -1,0 +1,13 @@
+version: '3'
+services:
+  daemon:
+    build:
+      context: .
+      args:
+        # Set via .env file.
+        USE_HOST_VENDOR: "${USE_HOST_VENDOR}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/opt/canary/data
+    environment:
+      - CANARY_DATA=/opt/canary/data
