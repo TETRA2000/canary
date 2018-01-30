@@ -12,5 +12,5 @@ type PluginResult struct {
 
 type Plugin interface {
 	Name() string
-	Exec(arg PluginArg) PluginResult
+	Exec(taskName string, args PluginArg) PluginResult
 }

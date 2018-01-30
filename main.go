@@ -34,7 +34,7 @@ func pluginDemo() {
 		os.Exit(1)
 	}
 
-	plg.Exec(api.PluginArg{})
+	plg.Exec("", api.PluginArg{})
 }
 
 func dockerPluginDemo() {
@@ -57,5 +57,5 @@ func dockerPluginDemo() {
 		os.Exit(1)
 	}
 
-	plg.Exec(api.PluginArg{})
+	plg.Exec("", api.PluginArg{})
 }

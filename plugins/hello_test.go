@@ -27,5 +27,5 @@ func TestHelloPlugin_Exec(t *testing.T) {
 		t.Error("unexpected type from module symbol")
 	}
 
-	plg.Exec(api.PluginArg{})
+	plg.Exec("", api.PluginArg{})
 }

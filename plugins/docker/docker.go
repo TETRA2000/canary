@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/tetra2000/canary/api"
+	"github.com/tetra2000/canary/plugins/docker/lib"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -12,6 +13,9 @@ import (
 // To suppress warning `relocation target main.main not defined`
 func main () {}
 
+//TODO remove
+const version = lib.VERSION
+
 type DockerPlugin struct {
 
 }
@@ -20,8 +24,8 @@ func (p DockerPlugin) Name() string {
 	return "DockerPlugin"
 }
 
-func (p DockerPlugin) Exec(arg api.PluginArg) api.PluginResult {
-	fmt.Print("Listing Docker images.\n")
+func (p DockerPlugin) Exec(taskName string, args api.PluginArg) api.PluginResult {
+	fmt.Print("Listing Docker containers.\n")
 
 	cli, err := client.NewEnvClient()
 	if err != nil {
