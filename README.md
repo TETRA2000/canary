@@ -8,12 +8,14 @@
 
 ## Run
 
+### Linux/macOS
+
 ```bash
-docker build -t canary .
-docker run -d -v $PWD/data:/opt/canary/data -v /var/run/docker.sock:/var/run/docker.sock canary
+docker-compose build
+docker-compose up -d
 ```
 
-If you building for development, adding `--build-arg USE_HOST_VENDOR=1` will keep files in `vendor/` and skip `dep ensure`.
+If you are building for development, adding `USE_HOST_VENDOR=1` in `.env` will keep files in `vendor/` and skip `dep ensure` step.
 
 
 ## Test
