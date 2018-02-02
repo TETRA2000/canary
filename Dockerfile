@@ -21,17 +21,13 @@ RUN apk --update add bash curl \
 RUN apk --update add git build-base \
     && rm -rf /var/cache/apk/*
 
+ENV BUILD_HOME=$GOPATH/src/github.com/tetra2000/canary
+
 # dep
 RUN go get -u github.com/golang/dep/cmd/dep
 
-ENV APP_HOME=$GOPATH/src/github.com/tetra2000/canary
-
-# TODO Rethink later
-ENV CANARY_DATA=/opt/canary/data
-VOLUME $CANARY_DATA
-
-ADD . $APP_HOME
-WORKDIR $APP_HOME
+ADD . $BUILD_HOME
+WORKDIR $BUILD_HOME
 
 ARG USE_HOST_VENDOR=0
 RUN ./scripts/dep_ensure.sh
@@ -41,4 +37,26 @@ RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
 RUN go build -buildmode=plugin  -o plugins/docker.so plugins/docker/docker.go
 
 RUN go build
+
+RUN mkdir -p /opt/canary \
+  && mv ./canary /opt/canary/ \
+  && mv ./plugins /opt/canary/
+
+FROM alpine:3.2
+
+COPY --from=0 /usr/local/bin/docker /usr/local/bin/docker
+
+# git
+RUN apk --update add git \
+    && rm -rf /var/cache/apk/*
+
+ENV APP_HOME=/opt/canary
+WORKDIR $APP_HOME
+
+COPY --from=0 /opt/canary $APP_HOME
+
+# TODO Rethink later
+ENV CANARY_DATA=/opt/canary/data
+VOLUME $CANARY_DATA
+
 CMD ./canary
