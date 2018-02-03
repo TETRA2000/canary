@@ -23,6 +23,10 @@ func (p GitPlugin) Name() string {
 	return "GitPlugin"
 }
 
+func (p GitPlugin) TaskNames() []string  {
+	return []string{"git:pull"}
+}
+
 func (p GitPlugin) Exec(taskName string, args types.PluginArg) types.PluginResult {
 	// from https://github.com/src-d/go-git/blob/master/_examples/log/main.go
 

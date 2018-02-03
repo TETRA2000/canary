@@ -4,42 +4,32 @@ import (
 	"fmt"
 	"os"
 	"plugin"
+	daemonApi "github.com/tetra2000/canary/api/daemon"
 	"github.com/tetra2000/canary/api/types"
 )
 
-func main () {
-	fmt.Println("Hello!!")
-	pluginDemo()
-	dockerPluginDemo()
-	gitPluginDemo()
+var daemon *daemonApi.Daemon
+
+func main() {
+	daemon = &daemonApi.Daemon{}
+	loadDefaultPlugins(daemon)
+	daemon.InvokeTask("hello", types.PluginArg{})
 }
 
-
-func pluginDemo() {
-	plg, err := loadPlugin("plugins/hello.so")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+func loadDefaultPlugins(daemon *daemonApi.Daemon) {
+	paths := []string{"plugins/hello.so",
+		"plugins/docker.so",
+		"plugins/git.so"}
+	for _, path := range paths {
+		plg, err := loadPlugin(path)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		for _, name := range plg.TaskNames() {
+			daemon.RegisterTaskHandler(name, &plg)
+		}
 	}
-	plg.Exec("", types.PluginArg{})
-}
-
-func dockerPluginDemo() {
-	plg, err := loadPlugin("plugins/docker.so")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	plg.Exec("", types.PluginArg{})
-}
-
-func gitPluginDemo() {
-	plg, err := loadPlugin("plugins/git.so")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	plg.Exec("", types.PluginArg{})
 }
 
 func loadPlugin(path string) (types.Plugin, error) {

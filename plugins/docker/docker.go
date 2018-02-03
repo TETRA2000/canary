@@ -24,6 +24,10 @@ func (p DockerPlugin) Name() string {
 	return "DockerPlugin"
 }
 
+func (p DockerPlugin) TaskNames() []string  {
+	return []string{"docker:build", "docker:run", "docker:preview"}
+}
+
 func (p DockerPlugin) Exec(taskName string, args types.PluginArg) types.PluginResult {
 	fmt.Print("Listing Docker containers.\n")
 

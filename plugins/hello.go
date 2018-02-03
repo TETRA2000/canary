@@ -16,6 +16,10 @@ func (p HelloPlugin) Name() string {
 	return "HelloPlugin"
 }
 
+func (p HelloPlugin) TaskNames() []string  {
+	return []string{"hello"}
+}
+
 func (p HelloPlugin) Exec(taskName string, args types.PluginArg) types.PluginResult {
 	fmt.Println("Hello from plugin!!")
 	return types.PluginResult{Output: "", Err: nil}

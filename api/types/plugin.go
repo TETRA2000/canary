@@ -12,5 +12,6 @@ type PluginResult struct {
 
 type Plugin interface {
 	Name() string
+	TaskNames() []string
 	Exec(taskName string, args PluginArg) PluginResult
 }
