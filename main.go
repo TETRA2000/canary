@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"plugin"
-	"github.com/tetra2000/canary/api"
+	"github.com/tetra2000/canary/api/types"
 )
 
 func main () {
@@ -21,7 +21,7 @@ func pluginDemo() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	plg.Exec("", api.PluginArg{})
+	plg.Exec("", types.PluginArg{})
 }
 
 func dockerPluginDemo() {
@@ -30,7 +30,7 @@ func dockerPluginDemo() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	plg.Exec("", api.PluginArg{})
+	plg.Exec("", types.PluginArg{})
 }
 
 func gitPluginDemo() {
@@ -39,10 +39,10 @@ func gitPluginDemo() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	plg.Exec("", api.PluginArg{})
+	plg.Exec("", types.PluginArg{})
 }
 
-func loadPlugin(path string) (api.Plugin, error) {
+func loadPlugin(path string) (types.Plugin, error) {
 	plug, err := plugin.Open(path)
 	if err != nil {
 		return nil, err
@@ -53,8 +53,8 @@ func loadPlugin(path string) (api.Plugin, error) {
 		return nil, err
 	}
 
-	var plg api.Plugin
-	plg, ok := symPlugin.(api.Plugin)
+	var plg types.Plugin
+	plg, ok := symPlugin.(types.Plugin)
 	if !ok {
 		return nil, err
 	}

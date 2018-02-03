@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/tetra2000/canary/api"
+	"github.com/tetra2000/canary/api/types"
 	"github.com/tetra2000/canary/plugins/git/lib"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"gopkg.in/src-d/go-git.v4"
@@ -23,7 +23,7 @@ func (p GitPlugin) Name() string {
 	return "GitPlugin"
 }
 
-func (p GitPlugin) Exec(taskName string, args api.PluginArg) api.PluginResult {
+func (p GitPlugin) Exec(taskName string, args types.PluginArg) types.PluginResult {
 	// from https://github.com/src-d/go-git/blob/master/_examples/log/main.go
 
 	fmt.Println("git clone https://github.com/src-d/go-siva")
@@ -59,7 +59,7 @@ func (p GitPlugin) Exec(taskName string, args api.PluginArg) api.PluginResult {
 		panic(err)
 	}
 
-	return api.PluginResult{Output: "", Err: nil}
+	return types.PluginResult{Output: "", Err: nil}
 }
 
 var Plugin GitPlugin
