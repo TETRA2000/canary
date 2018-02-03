@@ -32,9 +32,8 @@ WORKDIR $BUILD_HOME
 ARG USE_HOST_VENDOR=0
 RUN ./scripts/dep_ensure.sh
 
-# TODO fix
 RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
-RUN go build -buildmode=plugin  -o plugins/docker.so plugins/docker/docker.go
+RUN ./scripts/build_default_plugins.sh
 
 RUN go build
 
