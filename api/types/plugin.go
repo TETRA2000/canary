@@ -1,8 +1,8 @@
 package types
 
-type PluginArg struct {
-	Argc []int
-	Argv []string
+type PluginParam struct {
+	Args    map[string]string
+	Workdir string
 }
 
 type PluginResult struct {
@@ -13,5 +13,5 @@ type PluginResult struct {
 type Plugin interface {
 	Name() string
 	TaskNames() []string
-	Exec(taskName string, args PluginArg) PluginResult
+	Exec(taskName string, param PluginParam) PluginResult
 }

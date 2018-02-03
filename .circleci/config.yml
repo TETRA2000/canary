@@ -27,5 +27,5 @@ jobs:
       - run: dep ensure
       # TODO: fix later
       - run: go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
-      - run: go build -buildmode=plugin  -o plugins/docker.so plugins/docker/docker.go
+      - run: ./scripts/build_default_plugins.sh
       - run: go test -v ./...

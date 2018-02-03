@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 	"plugin"
-	"github.com/tetra2000/canary/api"
+	"github.com/tetra2000/canary/api/types"
 )
 
 var (
@@ -21,11 +21,11 @@ func TestHelloPlugin_Exec(t *testing.T) {
 		t.Error(err)
 	}
 
-	var plg api.Plugin
-	plg, ok := symPlugin.(api.Plugin)
+	var plg types.Plugin
+	plg, ok := symPlugin.(types.Plugin)
 	if !ok {
 		t.Error("unexpected type from module symbol")
 	}
 
-	plg.Exec("", api.PluginArg{})
+	plg.Exec("", types.PluginParam{})
 }

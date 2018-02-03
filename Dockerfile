@@ -53,6 +53,8 @@ RUN apk --update add ca-certificates \
 
 COPY --from=0 /usr/local/bin/docker /usr/local/bin/docker
 
+COPY ./docker/ssh_config /root/.ssh/config
+
 ENV APP_HOME=/opt/canary
 WORKDIR $APP_HOME
 

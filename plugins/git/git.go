@@ -6,7 +6,6 @@ import (
 	"github.com/tetra2000/canary/plugins/git/lib"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/storage/memory"
 )
 
 // To suppress warning `relocation target main.main not defined`
@@ -27,13 +26,11 @@ func (p GitPlugin) TaskNames() []string  {
 	return []string{"git:pull"}
 }
 
-func (p GitPlugin) Exec(taskName string, args types.PluginArg) types.PluginResult {
+func (p GitPlugin) Exec(taskName string, param types.PluginParam) types.PluginResult {
 	// from https://github.com/src-d/go-git/blob/master/_examples/log/main.go
 
-	fmt.Println("git clone https://github.com/src-d/go-siva")
-	r, err := git.Clone(memory.NewStorage(), nil, &git.CloneOptions{
-		URL: "https://github.com/src-d/go-siva",
-	})
+	fmt.Println("opening repo in {0}", param.Workdir)
+	r, err := git.PlainOpen(param.Workdir)
 	if err != nil {
 		panic(err)
 	}

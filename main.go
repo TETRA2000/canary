@@ -11,9 +11,26 @@ import (
 var daemon *daemonApi.Daemon
 
 func main() {
-	daemon = &daemonApi.Daemon{}
+	daemon = &daemonApi.Daemon{TaskHandlers: make(map[string][]*types.Plugin)}
 	loadDefaultPlugins(daemon)
-	daemon.InvokeTask("hello", types.PluginArg{})
+
+	daemon.InvokeTask("hello", types.PluginParam{})
+
+	demo()
+}
+
+// canary.demo
+func demo() {
+	daemon.InvokeTask("git:pull", types.PluginParam{
+		Workdir: "/opt/canary/data/projects/demo.canary/repo",
+	})
+	daemon.InvokeTask("docker:build", types.PluginParam{
+		Workdir: "/opt/canary/data/projects/demo.canary",
+	})
+
+	daemon.InvokeTask("docker:build", types.PluginParam{
+		Workdir: "/opt/canary/data/projects/demo.canary",
+	})
 }
 
 func loadDefaultPlugins(daemon *daemonApi.Daemon) {
