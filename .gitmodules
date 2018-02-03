@@ -1,3 +1,6 @@
 [submodule "data_example/projects/vuejs.org/repo"]
 	path = data_example/projects/vuejs.org/repo
 	url = https://github.com/vuejs/vuejs.org.git
+[submodule "data_example/projects/demo.canary/repo"]
+	path = data_example/projects/demo.canary/repo
+	url = https://github.com/TETRA2000/demo.canary.git
