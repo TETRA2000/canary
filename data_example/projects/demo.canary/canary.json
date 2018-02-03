@@ -7,7 +7,7 @@
       "args": {
         "branch": "master"
       },
-      "workdir": "repo",
+      "workdir": "$PROJECT_ROOT/repo",
       "timeout": "3m"
     },
     {
@@ -22,7 +22,7 @@
       "on": "docker:build:success",
       "do": "docker:run",
       "args": {
-        "params": ["--rm", "-v", "$PWD/repo:/opt/repo", "demo.canary", "/opt/util/copy_artifacts.sh"]
+        "params": ["--rm", "-v", "$PROJECT_ROOT/repo:/opt/repo", "demo.canary", "/opt/util/copy_artifacts.sh"]
       },
       "timeout": "3m"
     }

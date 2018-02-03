@@ -10,52 +10,54 @@ import (
 func main () {
 	fmt.Println("Hello!!")
 	pluginDemo()
-	dockerPluginDemo();
+	dockerPluginDemo()
+	gitPluginDemo()
 }
 
 
 func pluginDemo() {
-	plug, err := plugin.Open("plugins/hello.so")
+	plg, err := loadPlugin("plugins/hello.so")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	symPlugin, err := plug.Lookup("Plugin")
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	var plg api.Plugin
-	plg, ok := symPlugin.(api.Plugin)
-	if !ok {
-		fmt.Println("unexpected type from module symbol")
-		os.Exit(1)
-	}
-
 	plg.Exec("", api.PluginArg{})
 }
 
 func dockerPluginDemo() {
-	plug, err := plugin.Open("plugins/docker.so")
+	plg, err := loadPlugin("plugins/docker.so")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	plg.Exec("", api.PluginArg{})
+}
 
-	symPlugin, err := plug.Lookup("Plugin")
+func gitPluginDemo() {
+	plg, err := loadPlugin("plugins/git.so")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	}
+	plg.Exec("", api.PluginArg{})
+}
+
+func loadPlugin(path string) (api.Plugin, error) {
+	plug, err := plugin.Open(path)
+	if err != nil {
+		return nil, err
+	}
+
+	symPlugin, err := plug.Lookup("Plugin")
+	if err != nil {
+		return nil, err
 	}
 
 	var plg api.Plugin
 	plg, ok := symPlugin.(api.Plugin)
 	if !ok {
-		fmt.Println("unexpected type from module symbol")
-		os.Exit(1)
+		return nil, err
 	}
 
-	plg.Exec("", api.PluginArg{})
+	return plg, nil
 }
