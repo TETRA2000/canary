@@ -1,5 +1,10 @@
 version: '3'
 services:
+  dockerd:
+    image: docker:dind
+    privileged: true
+    volumes:
+      - dockerd-run-volume:/var/run
   daemon:
     build:
       context: .
@@ -7,7 +12,14 @@ services:
         # Set via .env file.
         USE_HOST_VENDOR: "${USE_HOST_VENDOR}"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/opt/canary/data
+      - dockerd-run-volume:/opt/dockerd/var/run
     environment:
       - CANARY_DATA=/opt/canary/data
+      - DOCKER_HOST=unix:///opt/dockerd/var/run/docker.sock
+    depends_on:
+      - dockerd
+    command: "./scripts/wait-for-dockerd.sh && ./canary"
+
+volumes:
+  dockerd-run-volume:
