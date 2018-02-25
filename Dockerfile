@@ -54,6 +54,7 @@ ENV APP_HOME=/opt/canary
 WORKDIR $APP_HOME
 
 COPY --from=0 /opt/canary $APP_HOME
+ADD ./scripts /opt/canary/scripts
 
 # TODO Rethink later
 ENV CANARY_DATA=/opt/canary/data
