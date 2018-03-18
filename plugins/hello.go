@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/tetra2000/canary/api"
+	"github.com/tetra2000/canary/api/types"
 )
 
 // To suppress warning `relocation target main.main not defined`
@@ -16,9 +16,13 @@ func (p HelloPlugin) Name() string {
 	return "HelloPlugin"
 }
 
-func (p HelloPlugin) Exec(arg api.PluginArg) api.PluginResult {
+func (p HelloPlugin) TaskNames() []string  {
+	return []string{"hello"}
+}
+
+func (p HelloPlugin) Exec(taskName string, param types.PluginParam) types.PluginResult {
 	fmt.Println("Hello from plugin!!")
-	return api.PluginResult{Output: "", Err: nil}
+	return types.PluginResult{Output: "", Err: nil}
 }
 
 var Plugin HelloPlugin

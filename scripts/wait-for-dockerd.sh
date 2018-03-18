@@ -7,7 +7,7 @@ host="$1"
 shift
 cmd="$@"
 
-until docker info; do
+until docker info > /dev/null; do
   >&2 echo "Docker daemon is unavailable - sleeping"
   sleep 1
 done

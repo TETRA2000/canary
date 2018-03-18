@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "scm": {
+    "plugin": "git",
+    "args": {
+      "host": "github",
+      "url": "https://github.com/vuejs/vuejs.org.git"
+    }
+  },
+  // TODO task combination/dependency
+  "tasks": {
+    "build": {
+      "plugin": "docker",
+      "args": {
+        // TODO fix later
+        "lint_parser": "eslint"
+      }
+    },
+    "preview": {
+      "plugin": "docker",
+      "args": {}
+    }
+  },
+  "lifecycle": [
+    "build",
+    "preview"
+  ]
+}

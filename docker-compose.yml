@@ -12,6 +12,8 @@ services:
         # Set via .env file.
         USE_HOST_VENDOR: "${USE_HOST_VENDOR}"
     volumes:
+      # Use host's ssh key to access git remote
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       - ./data:/opt/canary/data
       - dockerd-run-volume:/opt/dockerd/var/run
     environment:

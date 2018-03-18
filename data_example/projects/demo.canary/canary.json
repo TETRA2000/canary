@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "on": "every:1m",
+      "do": "git:pull",
+      "args": {
+        "branch": "master"
+      },
+      "workdir": "$PROJECT_ROOT/repo",
+      "timeout": "3m"
+    },
+    {
+      "on": "git:pull:update",
+      "do": "docker:build",
+      "args": {
+        "tag": "demo.canary"
+      },
+      "timeout": "15m"
+    },
+    {
+      "on": "docker:build:success",
+      "do": "docker:run",
+      "args": {
+        "params": ["--rm", "-v", "$PROJECT_ROOT/repo:/opt/repo", "demo.canary", "/opt/util/copy_artifacts.sh"]
+      },
+      "timeout": "3m"
+    }
+  ]
+}

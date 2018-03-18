@@ -19,7 +19,17 @@
 #  name = "github.com/x/y"
 #  version = "2.4.0"
 
+required = ["github.com/docker/distribution"]
 
 [[constraint]]
   name = "github.com/docker/docker"
-  version = "1.13.1"
+  branch = "master"
+
+[[constraint]]
+  name = "gopkg.in/src-d/go-git.v4"
+  version = "4.1.0"
+
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "1.2.1"

@@ -1,0 +1,16 @@
+version: 1
+repo:
+  scm: git
+  git:
+    host: github
+    url: https://github.com/vuejs/vuejs.org.git
+build:
+  engine: docker
+  docker:
+    context: .
+    dockerfile: Dockerfile
+pust_process:
+  actions:
+    - preview
+  preview:
+    # TODO add configs
