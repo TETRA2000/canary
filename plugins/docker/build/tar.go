@@ -6,10 +6,15 @@ import (
 	"path/filepath"
 )
 
-func ArchiveDirectory(workdir string, ignoreFile string) (io.ReadCloser, error) {
+type Tar struct {
+
+}
+
+func (t *Tar) ArchiveDirectory(workdir string, ignoreFile string) (io.ReadCloser, error) {
 	ignoreFilePath := filepath.Join(workdir, ignoreFile)
 
-	excludes, err := ReadIgnoreFile(ignoreFilePath)
+	ignore := &Ignore{}
+	excludes, err := ignore.ReadIgnoreFile(ignoreFilePath)
 	if err != nil {
 		return nil, err
 	}

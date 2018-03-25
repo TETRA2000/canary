@@ -25,11 +25,7 @@ func demo() {
 		Workdir: "/opt/canary/data/projects/demo.canary/repo",
 	})
 	daemon.InvokeTask("docker:build", types.PluginParam{
-		Workdir: "/opt/canary/data/projects/demo.canary",
-	})
-
-	daemon.InvokeTask("docker:build", types.PluginParam{
-		Workdir: "/opt/canary/data/projects/demo.canary",
+		Workdir: "/opt/canary/data/projects/demo.canary/repo",
 	})
 }
 

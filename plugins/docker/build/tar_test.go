@@ -13,7 +13,8 @@ import (
 )
 
 func TestToArchiveWithIgnore(t *testing.T) {
-	buildCtx, err := ArchiveDirectory("./testdata/workdir/", ".dockerignore")
+	pluginTar := &Tar{}
+	buildCtx, err := pluginTar.ArchiveDirectory("./testdata/workdir/", ".dockerignore")
 	if err != nil {
 		t.Error(err)
 	}
