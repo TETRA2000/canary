@@ -34,6 +34,7 @@ func ListContainers(param types.PluginParam) types.PluginResult {
 	return types.PluginResult{Output: "", Err: nil}
 }
 
+// TODO Replace with build + start
 func Run(param types.PluginParam) types.PluginResult {
 	cli, err := client.NewEnvClient()
 	if err != nil {
@@ -61,26 +62,23 @@ func Build(param types.PluginParam) types.PluginResult {
 	ctx := context.Background()
 	cli, err := client.NewEnvClient()
 	if err != nil {
-		panic(err)
+		return types.PluginResult{Output: "", Err: err}
 	}
 
 	pluginTar := &build.Tar{}
 	buildContext, err := pluginTar.ArchiveDirectory(param.Workdir, ".dockerignore")
 	if err != nil {
-		panic(err)
+		return types.PluginResult{Output: "", Err: err}
 	}
 
 	options := dockertypes.ImageBuildOptions{}
 
 	res, err := cli.ImageBuild(ctx, buildContext, options)
 	if err != nil {
-		panic(err)
+		return types.PluginResult{Output: "", Err: err}
 	}
 
-	// TODO remove
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(res.Body)
-	println(buf.String())
-
-	return types.PluginResult{Output: "", Err: nil}
+	return types.PluginResult{Output: buf.String(), Err: nil}
 }

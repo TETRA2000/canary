@@ -10,6 +10,11 @@ type PluginResult struct {
 	Err error
 }
 
+type TaskResult struct {
+	TaskHandler *Plugin
+	Result PluginResult
+}
+
 type Plugin interface {
 	Name() string
 	TaskNames() []string

@@ -8,11 +8,13 @@ type Daemon struct {
 	TaskHandlers map[string][]*types.Plugin
 }
 
-func (d *Daemon) InvokeTask(taskName string, param types.PluginParam) {
+func (d *Daemon) InvokeTask(taskName string, param types.PluginParam) []types.TaskResult {
+	var results []types.TaskResult
 	handlers := d.TaskHandlers[taskName]
 	for _, h := range handlers {
-		(*h).Exec(taskName, param)
+		results = append(results, types.TaskResult{TaskHandler: h, Result: (*h).Exec(taskName, param)})
 	}
+	return results
 }
 
 func (d *Daemon) GetHandlers(taskName string) []*types.Plugin {
