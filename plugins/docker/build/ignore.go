@@ -5,7 +5,11 @@ import (
 	"os"
 )
 
-func ReadIgnoreFile(path string) ([]string, error) {
+type Ignore struct {
+
+}
+
+func (i *Ignore) ReadIgnoreFile(path string) ([]string, error) {
 	ignoreFile, err := os.Open(path)
 	if err != nil {
 		return nil, err

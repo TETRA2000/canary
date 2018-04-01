@@ -6,7 +6,8 @@ import (
 )
 
 func TestToReadDockerignore(t *testing.T) {
-	excludes, err := ReadIgnoreFile("./testdata/workdir/.dockerignore")
+	ignore := &Ignore{}
+	excludes, err := ignore.ReadIgnoreFile("./testdata/workdir/.dockerignore")
 	if err != nil {
 		t.Error(err)
 	}

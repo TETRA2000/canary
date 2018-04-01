@@ -9,6 +9,8 @@ import (
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
 	//"github.com/docker/docker/pkg/streamformatter"
+	"github.com/tetra2000/canary/plugins/docker/build"
+	"bytes"
 )
 
 // Demo
@@ -32,6 +34,7 @@ func ListContainers(param types.PluginParam) types.PluginResult {
 	return types.PluginResult{Output: "", Err: nil}
 }
 
+// TODO Replace with build + start
 func Run(param types.PluginParam) types.PluginResult {
 	cli, err := client.NewEnvClient()
 	if err != nil {
@@ -56,74 +59,26 @@ func Run(param types.PluginParam) types.PluginResult {
 }
 
 func Build(param types.PluginParam) types.PluginResult {
-	//ctx := context.Background()
-	//cli, err := client.NewEnvClient()
-	//if err != nil {
-	//	panic(err)
-	//}
+	ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
 
+	pluginTar := &build.Tar{}
+	buildContext, err := pluginTar.ArchiveDirectory(param.Workdir, ".dockerignore")
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
 
-	// cli.ImageBuild(ctx)
+	options := dockertypes.ImageBuildOptions{}
 
+	res, err := cli.ImageBuild(ctx, buildContext, options)
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
 
-	return types.PluginResult{Output: "", Err: nil}
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(res.Body)
+	return types.PluginResult{Output: buf.String(), Err: nil}
 }
-
-//func Build(param types.PluginParam) types.PluginResult {
-//  var (
-//    buildCtx      io.ReadCloser
-//    //dockerfileCtx io.ReadCloser
-//    err           error
-//    contextDir    string
-//    //tempDir       string
-//    relDockerfile string
-//    progBuff      io.Writer
-//    //buildBuff     io.Writer
-//    //remote        string
-//  )
-//
-//  cli, err := client.NewEnvClient()
-//  if err != nil {
-//    panic(err)
-//  }
-//
-//  contextDir, relDockerfile, err = clibuild.GetContextFromLocalDir(param.Workdir, "Dockerfile")
-//
-//  // read from a directory into tar archive
-//  excludes, err := clibuild.ReadDockerignore(contextDir)
-//  if err != nil {
-//    return types.PluginResult{Err: err}
-//  }
-//
-//  if err := clibuild.ValidateContextDirectory(contextDir, excludes); err != nil {
-//    return types.PluginResult{Err: errors.New(fmt.Sprint("error checking context: '%s'.", err))}
-//  }
-//
-//  excludes = clibuild.TrimBuildFilesFromExcludes(excludes, relDockerfile, false)
-//  buildCtx, err = archive.TarWithOptions(contextDir, &archive.TarOptions{
-//    ExcludePatterns: excludes,
-//    ChownOpts:       &idtools.IDPair{UID: 0, GID: 0},
-//  })
-//  if err != nil {
-//    return types.PluginResult{Err: err}
-//  }
-//
-//  // Setup an upload progress bar
-//  progBuff = bytes.NewBuffer(nil)
-//  progressOutput := streamformatter.NewProgressOutput(progBuff)
-//
-//  var body io.Reader
-//  if buildCtx != nil {
-//    body = progress.NewProgressReader(buildCtx, progressOutput, 0, "", "Sending build context to Docker daemon")
-//  }
-//
-//  buildOptions := dockertypes.ImageBuildOptions{}
-//
-//  response, err := cli.ImageBuild(context.Background(), body, buildOptions)
-//  if err != nil {
-//    return types.PluginResult{Err: err}
-//  }
-//  defer response.Body.Close()
-//
-//  return types.PluginResult{Output: "", Err: nil}
-//}
