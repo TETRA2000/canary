@@ -7,17 +7,18 @@ import (
 	"fmt"
 	"context"
 	"github.com/docker/docker/api/types/network"
-	"github.com/docker/docker/client"
-	//"github.com/docker/docker/pkg/streamformatter"
 	"github.com/tetra2000/canary/plugins/docker/build"
 	"bytes"
+	"github.com/tetra2000/canary/plugins/docker/client"
+	reacClient "github.com/docker/docker/client"
 )
 
 // Demo
 func ListContainers(param types.PluginParam) types.PluginResult {
+	// TODO replace with client.NewDockerClient
 	fmt.Print("Listing Docker containers.\n")
 
-	cli, err := client.NewEnvClient()
+	cli, err := reacClient.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
@@ -36,7 +37,8 @@ func ListContainers(param types.PluginParam) types.PluginResult {
 
 // TODO Replace with build + start
 func Run(param types.PluginParam) types.PluginResult {
-	cli, err := client.NewEnvClient()
+	// TODO replace with client.NewDockerClient
+	cli, err := reacClient.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +62,7 @@ func Run(param types.PluginParam) types.PluginResult {
 
 func Build(param types.PluginParam) types.PluginResult {
 	ctx := context.Background()
-	cli, err := client.NewEnvClient()
+	cli, err := client.NewDockerClient()
 	if err != nil {
 		return types.PluginResult{Output: "", Err: err}
 	}
