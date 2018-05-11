@@ -1,17 +1,19 @@
 package build
 
 import (
-	"testing"
-	"github.com/tetra2000/canary/api/job"
-	"github.com/stretchr/testify/assert"
-	uuid2 "github.com/google/uuid"
-    "github.com/tetra2000/canary/plugins/docker/api/types"
+	dockerTypes "github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/api/types/registry"
-	"github.com/docker/docker/api/types/filters"
+	uuid2 "github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
+	"github.com/tetra2000/canary/api/job"
+	"github.com/tetra2000/canary/plugins/docker/api/types"
 	"golang.org/x/net/context"
 	"io"
-	dockerTypes "github.com/docker/docker/api/types"
+	"io/ioutil"
+	"strings"
+	"testing"
 )
 
 func TestToBuildFromJob(t *testing.T) {
@@ -31,15 +33,17 @@ func TestToBuildFromJob(t *testing.T) {
 	}
 
 	testJob := job.Job{
-		Name: "Test",
-		Uuid: uuid2.New().String(),
+		Name:         "Test",
+		Uuid:         uuid2.New().String(),
 		BuildContext: buildCtx,
 	}
 
-	result := jobBuilder.buildJob(testJob)
+	result, err := jobBuilder.buildJob(testJob)
+	if err != nil {
+		t.Error(err)
+	}
 	assert.NotNil(t, result)
-	assert.NotEqual(t, "", result.ConsoleOutput)
-	assert.Nil(t, result.Error)
+	assert.Equal(t, "BuildResult", result.ConsoleOutput)
 }
 
 type MockDockerClient struct {
@@ -47,21 +51,21 @@ type MockDockerClient struct {
 }
 
 func newMockClient() (*types.IDockerClient, error) {
-	var cli types.IDockerClient = &MockDockerClient{
-
-	}
+	var cli types.IDockerClient = &MockDockerClient{}
 	return &cli, nil
 }
 
 func (cli *MockDockerClient) ImageBuild(ctx context.Context, context io.Reader, options dockerTypes.ImageBuildOptions) (dockerTypes.ImageBuildResponse, error) {
-	return dockerTypes.ImageBuildResponse{}, nil
+	rc := ioutil.NopCloser(strings.NewReader("BuildResult"))
+	defer rc.Close()
+	return dockerTypes.ImageBuildResponse{Body: rc}, nil
 }
 
 func (cli *MockDockerClient) BuildCachePrune(ctx context.Context) (*dockerTypes.BuildCachePruneReport, error) {
 	return nil, nil
 }
 
-func (cli *MockDockerClient) ImageCreate(ctx context.Context, parentReference string, options dockerTypes.ImageCreateOptions) (io.ReadCloser, error){
+func (cli *MockDockerClient) ImageCreate(ctx context.Context, parentReference string, options dockerTypes.ImageCreateOptions) (io.ReadCloser, error) {
 	return nil, nil
 }
 
