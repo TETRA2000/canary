@@ -21,7 +21,10 @@ func (jb *JobBuilder) buildJob(job job.Job) (types.JobResult, error) {
 	}
 
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(res.Body)
+	_, err = buf.ReadFrom(res.Body)
+	if err != nil {
+		return types.JobResult{}, err
+	}
 
 	// TODO cleanup output
 	output := buf.String()

@@ -20,6 +20,7 @@ func main() {
 }
 
 // canary.demo
+// TODO: remove (only for demo)
 func demo() {
 	daemon.InvokeTask("git:pull", types.PluginParam{
 		Workdir: "/opt/canary/data/projects/demo.canary/repo",

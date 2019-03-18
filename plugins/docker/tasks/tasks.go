@@ -81,6 +81,9 @@ func Build(param types.PluginParam) types.PluginResult {
 	}
 
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(res.Body)
+	_, err = buf.ReadFrom(res.Body)
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
 	return types.PluginResult{Output: buf.String(), Err: nil}
 }
