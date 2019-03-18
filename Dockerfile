@@ -1,4 +1,4 @@
-FROM golang:1.9.2-alpine
+FROM golang:1.12-alpine
 
 
 # git, build-base, curl
