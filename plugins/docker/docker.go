@@ -32,16 +32,12 @@ func (p DockerPlugin) TaskNames() []string  {
 func (p DockerPlugin) Exec(taskName string, param types.PluginParam) types.PluginResult {
 	switch taskName {
 	case buildTask:
-		return tasks.Build(param)
-		break
+		return tasks.BuildJob(param)
 	case runTask:
 		return tasks.Run(param)
-		break
 	default:
 		return types.PluginResult{Err: errors.New("Undefined task.")}
 	}
-
-	return types.PluginResult{Err: errors.New("Unknown error.")}
 }
 
 var Plugin DockerPlugin
