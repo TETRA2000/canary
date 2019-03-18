@@ -13,7 +13,7 @@ type JobBuilder struct {
 	Client *pluginTypes.IDockerClient
 }
 
-func (jb *JobBuilder) buildJob(job job.Job) (types.JobResult, error) {
+func (jb *JobBuilder) BuildJob(job job.Job) (types.JobResult, error) {
 	options := dockertypes.ImageBuildOptions{}
 	res, err := (*jb.Client).ImageBuild(context.Background(), job.BuildContext, options)
 	if err != nil {

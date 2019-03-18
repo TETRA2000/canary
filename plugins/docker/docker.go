@@ -32,7 +32,7 @@ func (p DockerPlugin) TaskNames() []string  {
 func (p DockerPlugin) Exec(taskName string, param types.PluginParam) types.PluginResult {
 	switch taskName {
 	case buildTask:
-		return tasks.Build(param)
+		return tasks.BuildJob(param)
 	case runTask:
 		return tasks.Run(param)
 	default:

@@ -38,7 +38,7 @@ func TestToBuildFromJob(t *testing.T) {
 		BuildContext: buildCtx,
 	}
 
-	result, err := jobBuilder.buildJob(testJob)
+	result, err := jobBuilder.BuildJob(testJob)
 	if err != nil {
 		t.Error(err)
 	}

@@ -1,16 +1,19 @@
 package tasks
 
 import (
-	"github.com/tetra2000/canary/api/types"
+	"bytes"
+	"context"
+	"fmt"
 	dockertypes "github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
-	"fmt"
-	"context"
 	"github.com/docker/docker/api/types/network"
-	"github.com/tetra2000/canary/plugins/docker/build"
-	"bytes"
-	"github.com/tetra2000/canary/plugins/docker/client"
 	reacClient "github.com/docker/docker/client"
+	"github.com/google/uuid"
+	"github.com/tetra2000/canary/api/job"
+	"github.com/tetra2000/canary/api/types"
+	pluginTypes "github.com/tetra2000/canary/plugins/docker/api/types"
+	"github.com/tetra2000/canary/plugins/docker/build"
+	"github.com/tetra2000/canary/plugins/docker/client"
 )
 
 // Demo
@@ -60,6 +63,40 @@ func Run(param types.PluginParam) types.PluginResult {
 	return types.PluginResult{Output: "", Err: nil}
 }
 
+func BuildJob(param types.PluginParam) types.PluginResult {
+	var cli pluginTypes.IDockerClient
+	var err error
+	cli, err= client.NewDockerClient()
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
+
+	jobBuilder := build.JobBuilder{
+		Client: &cli,
+	}
+
+	pluginTar := &build.Tar{}
+	// TODO: allow to configure .dockerignore filename.
+	buildCtx, err := pluginTar.ArchiveDirectory(param.Workdir, ".dockerignore")
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
+
+	testJob := job.Job{
+		Name:         "Test",
+		Uuid:         uuid.New().String(),
+		BuildContext: buildCtx,
+	}
+
+	result, err := jobBuilder.BuildJob(testJob)
+	if err != nil {
+		return types.PluginResult{Output: "", Err: err}
+	}
+
+	return types.PluginResult{Output: result.ConsoleOutput, Err: nil}
+}
+
+// Deprecated: Use BuildJob instead.
 func Build(param types.PluginParam) types.PluginResult {
 	ctx := context.Background()
 	cli, err := client.NewDockerClient()
