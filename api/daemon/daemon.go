@@ -8,6 +8,7 @@ type Daemon struct {
 	TaskHandlers map[string][]*types.Plugin
 }
 
+// Invoke registered tasks for the given name.
 func (d *Daemon) InvokeTask(taskName string, param types.PluginParam) []types.TaskResult {
 	var results []types.TaskResult
 	handlers := d.TaskHandlers[taskName]
