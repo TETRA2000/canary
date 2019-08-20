@@ -7,7 +7,7 @@ jobs:
     docker:
       # specify the version
       - image: circleci/golang:latest
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -25,7 +25,5 @@ jobs:
 
       - run: go get -u github.com/golang/dep/cmd/dep
       - run: dep ensure
-      # TODO: fix later
-      - run: go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
       - run: ./scripts/build_default_plugins.sh
       - run: go test -v ./...

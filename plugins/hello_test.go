@@ -11,6 +11,8 @@ var (
 )
 
 func TestHelloPlugin_Exec(t *testing.T) {
+	t.Skip("Skipping because this plugin is only for explanation.")
+
 	plug, err := plugin.Open(pluginFile)
 	if err != nil {
 		t.Error(err)

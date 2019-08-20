@@ -14,8 +14,6 @@ func main() {
 	daemon = &daemonApi.Daemon{TaskHandlers: make(map[string][]*types.Plugin)}
 	loadDefaultPlugins(daemon)
 
-	daemon.InvokeTask("hello", types.PluginParam{})
-
 	demo()
 }
 
@@ -34,7 +32,7 @@ func demo() {
 }
 
 func loadDefaultPlugins(daemon *daemonApi.Daemon) {
-	paths := []string{"plugins/hello.so",
+	paths := []string{
 		"plugins/docker.so",
 		"plugins/git.so"}
 	for _, path := range paths {

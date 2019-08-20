@@ -36,7 +36,6 @@ ENV CGO_ENABLED=1
 ARG USE_HOST_VENDOR=0
 RUN ./scripts/dep_ensure.sh
 
-RUN go build -buildmode=plugin  -o plugins/hello.so plugins/hello.go
 RUN ./scripts/build_default_plugins.sh
 
 RUN go build
