@@ -20,14 +20,15 @@ func main() {
 // canary.demo
 // TODO: remove (only for demo)
 func demo() {
-	daemon.InvokeTask("git:pull", types.PluginParam{
+	var results []types.TaskResult
+	results = append(results, daemon.InvokeTask("git:fetch", types.PluginParam{
 		Workdir: "./data/projects/demo.canary/repo",
-	})
-	results := daemon.InvokeTask("docker:build", types.PluginParam{
+	})...)
+	results = append(results, daemon.InvokeTask("docker:build", types.PluginParam{
 		Workdir: "./data/projects/demo.canary/repo",
-	})
+	})...)
 	for _, r := range results {
-		fmt.Printf("TaskHandler: %s, Result: {Output: %s, Err: %s}", (*r.TaskHandler).Name(), r.Result.Output, r.Result.Err)
+		fmt.Printf("----------\n\nTaskHandler: %s\n\n<Result>\nOutput:\n%s\n\nErr\n%s\n\n", (*r.TaskHandler).Name(), r.Result.Output, r.Result.Err)
 	}
 }
 

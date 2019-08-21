@@ -36,7 +36,7 @@ func (p DockerPlugin) Exec(taskName string, param types.PluginParam) types.Plugi
 	case runTask:
 		return tasks.Run(param)
 	default:
-		return types.PluginResult{Err: errors.New("Undefined task.")}
+		return types.PluginResult{Err: errors.New("undefined task")}
 	}
 }
 
