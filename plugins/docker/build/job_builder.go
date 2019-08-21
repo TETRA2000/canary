@@ -14,6 +14,7 @@ type JobBuilder struct {
 }
 
 func (jb *JobBuilder) BuildJob(job job.Job) (types.JobResult, error) {
+	// TODO: tags, buildArgs, etc...
 	options := dockertypes.ImageBuildOptions{}
 	res, err := (*jb.Client).ImageBuild(context.Background(), job.BuildContext, options)
 	if err != nil {
@@ -26,7 +27,7 @@ func (jb *JobBuilder) BuildJob(job job.Job) (types.JobResult, error) {
 		return types.JobResult{}, err
 	}
 
-	// TODO cleanup output
+	// TODO Beautify output
 	output := buf.String()
 
 	return types.JobResult{ConsoleOutput: output}, nil
