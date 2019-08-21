@@ -13,5 +13,5 @@ func TestToReadDockerignore(t *testing.T) {
 	}
 
 	assert.Contains(t, excludes, "log")
-	assert.Contains(t, excludes, "exclud.txt")
+	assert.Contains(t, excludes, "exclude.txt")
 }

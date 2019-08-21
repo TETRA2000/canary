@@ -53,6 +53,6 @@ func TestToArchiveWithIgnore(t *testing.T) {
 
 	assert.Contains(t, fileNames, "Dockerfile")
 	assert.Contains(t, fileNames, "test.txt")
-	assert.NotContains(t, fileNames, "exclud.txt")
+	assert.NotContains(t, fileNames, "exclude.txt")
 	assert.NotContains(t, fileNames, "log")
 }

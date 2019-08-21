@@ -7,7 +7,7 @@ import (
 	dockertypes "github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/network"
-	reacClient "github.com/docker/docker/client"
+	realClient "github.com/docker/docker/client"
 	"github.com/google/uuid"
 	"github.com/tetra2000/canary/api/job"
 	"github.com/tetra2000/canary/api/types"
@@ -21,7 +21,7 @@ func ListContainers(param types.PluginParam) types.PluginResult {
 	// TODO replace with client.NewDockerClient
 	fmt.Print("Listing Docker containers.\n")
 
-	cli, err := reacClient.NewEnvClient()
+	cli, err := realClient.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +41,7 @@ func ListContainers(param types.PluginParam) types.PluginResult {
 // TODO Replace with build + start
 func Run(param types.PluginParam) types.PluginResult {
 	// TODO replace with client.NewDockerClient
-	cli, err := reacClient.NewEnvClient()
+	cli, err := realClient.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
