@@ -23,7 +23,28 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
 
-      - run: go get -u github.com/golang/dep/cmd/dep
-      - run: dep ensure
+      - run:
+          name: Install dependencies
+          command: |
+            go get -u github.com/golang/dep/cmd/dep
+            go get -u golang.org/x/lint/golint
+      - restore_cache:
+          keys:
+            - vendor-cache-v1-{{ arch }}-{{ checksum "Gopkg.lock" }}
+            - vendor-cache-v1
+      - run:
+          name: dep ensure
+          command: |
+            cp Gopkg.lock Gopkg.lock.bk
+            dep ensure
+            diff Gopkg.lock Gopkg.lock.bk
+      - save_cache:
+          key: vendor-cache-v1-{{ arch }}-{{ checksum "Gopkg.lock" }}
+          paths:
+            - vendor
+      # - run:
+      #     name: Run lint
+      #     command: |
+      #       go list ./... | grep -v /vendor/ | xargs -L1 golint -set_exit_status
       - run: ./scripts/build_default_plugins.sh
       - run: go test -v ./...
