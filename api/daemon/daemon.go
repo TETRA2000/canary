@@ -1,6 +1,7 @@
 package daemon
 
 import (
+	"fmt"
 	"github.com/tetra2000/canary/api/types"
 )
 
@@ -10,6 +11,11 @@ type Daemon struct {
 
 // Invoke registered tasks for the given name.
 func (d *Daemon) InvokeTask(taskName string, param types.PluginParam) []types.TaskResult {
+	if !d.IsKnownHandler(taskName) {
+		fmt.Printf("Unknown handler %s\n", taskName)
+		panic(0)
+	}
+
 	var results []types.TaskResult
 	handlers := d.TaskHandlers[taskName]
 	for _, h := range handlers {
@@ -43,4 +49,9 @@ func (d *Daemon) IsHandlerRegistered(taskName string, handler *types.Plugin) boo
 		}
 	}
 	return false
+}
+
+func (d *Daemon) IsKnownHandler(taskName string) bool {
+	handlers := d.GetHandlers(taskName)
+	return len(handlers) > 0
 }
