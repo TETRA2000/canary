@@ -10,10 +10,29 @@
   version = "v0.4.7"
 
 [[projects]]
+  digest = "1:dd35d6b0bfe676af7730a4d40296877f83af56a254442839fa544afb5ca6c57e"
+  name = "github.com/Microsoft/hcsshim"
+  packages = ["osversion"]
+  pruneopts = ""
+  revision = "b3f49c06ffaeef24d09c6c08ec8ec8425a0303e2"
+  version = "v0.8.7"
+
+[[projects]]
+  digest = "1:1fcb69ca49c89bae44da7f9cb691c665218af37589d45ebb1a98b8502615a319"
+  name = "github.com/containerd/containerd"
+  packages = ["errdefs"]
+  pruneopts = ""
+  revision = "c7a4f874b3267c499484aae602d1257b12d69e40"
+  version = "v1.3.1"
+
+[[projects]]
   branch = "master"
   digest = "1:4d0a4bb5407769b88b3f1fdfa4574be1422efd17e43bd6f2a8b3c0771482abfc"
   name = "github.com/containerd/continuity"
-  packages = ["pathdriver"]
+  packages = [
+    "fs",
+    "sysx",
+  ]
   pruneopts = ""
   revision = "d8fb8589b0e8e85b8c8bbaa8840226d0dfeb7371"
 
@@ -33,13 +52,14 @@
     ".",
     "digestset",
     "reference",
+    "registry/api/errcode",
   ]
   pruneopts = ""
   revision = "fea8bd51143307d3454703eadecbeeb778aa75e8"
 
 [[projects]]
   branch = "master"
-  digest = "1:38a94febf9e4a44a242fca06aae94114dc4f6d0d7781dea4352a68e7e9778d11"
+  digest = "1:4605753d3a78898d22498aaf290645ce3a589db914bb460ae31fd955dc706176"
   name = "github.com/docker/docker"
   packages = [
     "api",
@@ -60,6 +80,7 @@
     "api/types/volume",
     "builder/dockerignore",
     "client",
+    "errdefs",
     "pkg/archive",
     "pkg/fileutils",
     "pkg/idtools",
@@ -70,7 +91,7 @@
     "pkg/system",
   ]
   pruneopts = ""
-  revision = "6e5c2d639f67ae70f54d9f2285f3261440b074aa"
+  revision = "3152f9436292115c97b4d8bb18c66cf97876ee75"
 
 [[projects]]
   digest = "1:a5ecc2e70260a87aa263811281465a5effcfae8a54bac319cee87c4625f04d63"
@@ -99,6 +120,20 @@
   pruneopts = ""
   revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:b852d2b62be24e445fcdbad9ce3015b44c207815d631230dfce3f14e7803f5bf"
+  name = "github.com/golang/protobuf"
+  packages = [
+    "proto",
+    "ptypes",
+    "ptypes/any",
+    "ptypes/duration",
+    "ptypes/timestamp",
+  ]
+  pruneopts = ""
+  revision = "6c65a5562fc06764971b7c5d05c76c75e84bdbf7"
+  version = "v1.3.2"
 
 [[projects]]
   digest = "1:c1d7e883c50a26ea34019320d8ae40fad86c9e5d56e63a1ba2cb618cef43e986"
@@ -262,11 +297,18 @@
   name = "golang.org/x/net"
   packages = [
     "context",
-    "context/ctxhttp",
     "proxy",
   ]
   pruneopts = ""
   revision = "2fb46b16b8dda405028c50f7c7f0f9dd1fa6bfb1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:375358ce220ecbf8c3d441a48746790e906ccf6bcc1f0364158fcbd9819aad92"
+  name = "golang.org/x/sync"
+  packages = ["errgroup"]
+  pruneopts = ""
+  revision = "cd5d95a43a6e21273425c7ae415d3df9ea832eeb"
 
 [[projects]]
   branch = "master"
@@ -293,6 +335,28 @@
   ]
   pruneopts = ""
   revision = "e19ae1496984b1c655b8044a65c0300a3c878dd3"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1b028a8d750789d0723ab886c8b2853ee2d00539da8ce19a7ef77952900936b6"
+  name = "google.golang.org/genproto"
+  packages = ["googleapis/rpc/status"]
+  pruneopts = ""
+  revision = "049a07e0debe1a8cd87b6d392cfdb5ac558c7ddf"
+
+[[projects]]
+  digest = "1:ec89356e95f2a8983928a7872f71f0f934f97932353af4fe1a76d322db5eaf7b"
+  name = "google.golang.org/grpc"
+  packages = [
+    "codes",
+    "connectivity",
+    "grpclog",
+    "internal",
+    "status",
+  ]
+  pruneopts = ""
+  revision = "1a3960e4bd028ac0cec0a2afd27d7d8e67c11514"
+  version = "v1.25.1"
 
 [[projects]]
   digest = "1:c9d6db01c77951025c866918ffbffa0e178fcb7d54475b22e86ca4c552aa8104"
